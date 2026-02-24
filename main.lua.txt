@@ -1,0 +1,166 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "Binsigma Super Script 1.1 | Rayfield GUI",
+   LoadingTitle = "Đang tải hệ thống Đạt Roblox : v1.0...",
+   LoadingSubtitle = "by Binsigma Team",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = "Đạt Config",
+      FileName = "Đạt Main"
+   },
+   KeySystem = true, 
+   KeySettings = {
+      Title = "Hệ Thống Key",
+      Subtitle = "Nhập key để sử dụng",
+      Note = "Key là: datdeptraivai",
+      FileName = "datKey",
+      SaveKey = true,
+      GrabKeyFromSite = false,
+      Key = {"binsigmadeptraivai"} 
+   }
+})
+
+-- VARIABLES
+local lp = game.Players.LocalPlayer
+local mouse = lp:GetMouse()
+
+-----------------------------------------------------------
+-- TAB 1: CHỨC NĂNG CHÍNH
+-----------------------------------------------------------
+local MainTab = Window:CreateTab("Chức Năng Chính", 4483362458)
+
+MainTab:CreateButton({
+   Name = "Bay (Fly)",
+   Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.lua"))()
+   end,
+})
+
+MainTab:CreateToggle({
+   Name = "Noclip",
+   CurrentValue = false,
+   Callback = function(Value)
+       _G.noclip = Value
+       game:GetService("RunService").Stepped:Connect(function()
+           if _G.noclip then
+               for _, v in pairs(lp.Character:GetDescendants()) do
+                   if v:IsA("BasePart") then v.CanCollide = false end
+               end
+           end
+       end)
+   end,
+})
+
+MainTab:CreateButton({
+   Name = "Kill Aura (Phạm vi 15m)",
+   Callback = function()
+       _G.KillAura = true
+       while _G.KillAura do
+           task.wait(0.1)
+           for _, v in pairs(game.Players:GetPlayers()) do
+               if v ~= lp and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+                   local dist = (lp.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).magnitude
+                   if dist < 15 then
+                       local tool = lp.Character:FindFirstChildOfClass("Tool")
+                       if tool then tool:Activate() end
+                   end
+               end
+           end
+       end
+   end,
+})
+
+MainTab:CreateInput({
+   Name = "Bật Nhạc (Nhập ID)",
+   PlaceholderText = "Nhập ID nhạc...",
+   Callback = function(Text)
+       local s = Instance.new("Sound", game.Workspace)
+       s.SoundId = "rbxassetid://"..Text
+       s:Play()
+   end,
+})
+
+MainTab:CreateInput({
+   Name = "TP Đến Người Chơi",
+   PlaceholderText = "Nhập tên...",
+   Callback = function(Text)
+       local target = game.Players:FindFirstChild(Text)
+       if target then lp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame end
+   end,
+})
+
+MainTab:CreateButton({Name = "Dupe Cải Tiến", Callback = function() Rayfield:Notify({Title = "Thông báo", Content = "Đang thực hiện...", Duration = 3}) end})
+
+MainTab:CreateButton({
+   Name = "TP Tool",
+   Callback = function()
+       for _, v in pairs(game.Workspace:GetChildren()) do
+           if v:IsA("BackpackItem") or v:IsA("Tool") then
+               v.Handle.CFrame = lp.Character.HumanoidRootPart.CFrame
+           end
+       end
+   end,
+})
+
+MainTab:CreateButton({
+   Name = "Delete Part Tool (Click Part để xoá)",
+   Callback = function()
+       local tool = Instance.new("Tool")
+       tool.RequiresHandle = false
+       tool.Name = "Xóa Part"
+       tool.Activated:Connect(function() if mouse.Target then mouse.Target:Destroy() end end)
+       tool.Parent = lp.Backpack
+   end,
+})
+
+MainTab:CreateButton({
+   Name = "Bất Tử Cải Tiến Mạnh",
+   Callback = function()
+       lp.Character.Humanoid.MaxHealth = math.huge
+       lp.Character.Humanoid.Health = math.huge
+   end,
+})
+
+MainTab:CreateSlider({
+   Name = "Nhảy Cao",
+   Range = {50, 500},
+   Increment = 10,
+   CurrentValue = 50,
+   Callback = function(Value) lp.Character.Humanoid.JumpPower = Value end,
+})
+
+MainTab:CreateButton({
+   Name = "Bật ESP (X-Ray)",
+   Callback = function()
+       loadstring(game:HttpGet('https://raw.githubusercontent.com/Lucasfin000/SpaceHub/main/EspOnly'))()
+   end,
+})
+
+-----------------------------------------------------------
+-- TAB 2: SCRIPT 99 NIGHT
+-----------------------------------------------------------
+local NightTab = Window:CreateTab("99 Night", 4483362458)
+
+NightTab:CreateButton({Name = "Voidware", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/VapeVoidware/VW-Add/main/loader.lua", true))() end})
+NightTab:CreateButton({Name = "H4x Scripts", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/H4xScripts/Loader/refs/heads/main/loader2.lua", true))() end})
+NightTab:CreateButton({Name = "Fox Scripts", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/FoxnameHub.lua"))() end})
+NightTab:CreateButton({Name = "CPS Script", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Rx1m/CpsHub/refs/heads/main/Hub",true))() end})
+NightTab:CreateButton({Name = "The Dark Ones", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/TheDarkoneMarcillisePex/Other-Scripts/refs/heads/main/99%20Nights%20In%20The%20Forest%20GUI'))() end})
+
+-----------------------------------------------------------
+-- TAB 3: THOÁT KHỎI SÓNG THẦN
+-----------------------------------------------------------
+local TsunamiTab = Window:CreateTab("Sóng Thần", 4483362458)
+TsunamiTab:CreateButton({Name = "Rez Script", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/rezhubz/rez/refs/heads/main/rez.lua'))() end})
+TsunamiTab:CreateButton({Name = "Gumbana (Brainrot)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/EscapeTsunamiForBrainrots"))() end})
+
+-----------------------------------------------------------
+-- TAB 4: BLOX FRUIT
+-----------------------------------------------------------
+local BloxfruitTab = Window:CreateTab("Blox Fruit", 4483362458)
+BloxfruitTab:CreateButton({Name = "Gumbana (Brainrot)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/EscapeTsunamiForBrainrots"))() end})
+BloxfruitTab:CreateButton({Name = "Gumbana (Brainrot)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/EscapeTsunamiForBrainrots"))() end})
+BloxfruitTab:CreateButton({Name = "Gumbana (Brainrot)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/EscapeTsunamiForBrainrots"))() end})
+BloxfruitTab:CreateButton({Name = "farm chest", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/trongdeptraihucscript/Main/refs/heads/main/TN-Tp-Chest.lua"))() end})
+BloxfruitTab:CreateButton({Name = "Gumbana (Brainrot)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/EscapeTsunamiForBrainrots"))() end})
